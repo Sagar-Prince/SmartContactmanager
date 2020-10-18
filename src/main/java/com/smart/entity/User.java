@@ -13,38 +13,38 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
+
 @Entity
-@Table(name="USER")
+@Table(name = "USER")
 public class User {
+
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+	
+	 @NotBlank(message = "Name Field is Required")
+	 @Size(min = 2, max = 20,message = "Minimum 2 and max 20 characters are allowed")
 	private String Name;
 	@Column(unique = true)
 	private String Email;
-	private String imageUrl;
 	private String password;
-	@Column(length = 500)
-	private String about;
 	private String role;
 	private boolean enabled;
+	private String imageUrl;
+	@Column(length = 500)
+	private String about;
 	
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
-	private List<Contact> contact = new ArrayList<>();
+	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "user")
+	private List<Contact> contacts = new ArrayList<Contact>();
+	
+	
 	public User() {
 		super();
-			}
-	public User(int id, String name, String email, String imageUrl, String password, String about, String role,
-			boolean enabled) {
-		super();
-		this.id = id;
-		Name = name;
-		Email = email;
-		this.imageUrl = imageUrl;
-		this.password = password;
-		this.about = about;
-		this.role = role;
-		this.enabled = enabled;
+		// TODO Auto-generated constructor stub
 	}
 	public int getId() {
 		return id;
@@ -56,31 +56,19 @@ public class User {
 		return Name;
 	}
 	public void setName(String name) {
-		Name = name;
+		this.Name = name;
 	}
 	public String getEmail() {
 		return Email;
 	}
 	public void setEmail(String email) {
-		Email = email;
-	}
-	public String getImageUrl() {
-		return imageUrl;
-	}
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
+		this.Email = email;
 	}
 	public String getPassword() {
 		return password;
 	}
 	public void setPassword(String password) {
 		this.password = password;
-	}
-	public String getAbout() {
-		return about;
-	}
-	public void setAbout(String about) {
-		this.about = about;
 	}
 	public String getRole() {
 		return role;
@@ -94,17 +82,29 @@ public class User {
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
-	public List<Contact> getContact() {
-		return contact;
+	public String getImageUrl() {
+		return imageUrl;
 	}
-	public void setContact(List<Contact> contact) {
-		this.contact = contact;
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+	public String getAbout() {
+		return about;
+	}
+	public void setAbout(String about) {
+		this.about = about;
+	}
+	public List<Contact> getContacts() {
+		return contacts;
 	}
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", Name=" + Name + ", Email=" + Email + ", imageUrl=" + imageUrl + ", password="
-				+ password + ", about=" + about + ", role=" + role + ", enabled=" + enabled + ", contact=" + contact
+		return "User [id=" + id + ", name=" + Name + ", email=" + Email + ", password=" + password + ", role=" + role
+				+ ", enabled=" + enabled + ", imageUrl=" + imageUrl + ", about=" + about + ", contacts=" + contacts
 				+ "]";
+	}
+	public void setContacts(List<Contact> contacts) {
+		this.contacts = contacts;
 	}
 	
 }
