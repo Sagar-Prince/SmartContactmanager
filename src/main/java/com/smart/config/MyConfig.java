@@ -41,7 +41,8 @@ public class MyConfig extends WebSecurityConfigurerAdapter {
 
 		auth.authenticationProvider(authenticationProvider());
 	}
-
+		//configuration methods....
+	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
@@ -49,7 +50,7 @@ public class MyConfig extends WebSecurityConfigurerAdapter {
 		
 		.antMatchers("/admin/**").hasRole("ADMIN")
 		.antMatchers("/user/**").hasRole("USER")
-		.antMatchers("/**").permitAll().and().formLogin().and().csrf().disable();
+		.antMatchers("/**").permitAll().and().formLogin().loginPage("/signin").and().csrf().disable();
  
 	}
 
